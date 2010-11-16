@@ -1,0 +1,154 @@
+			  -*- mode: text -*-
+
+MASP - Assembly Preprocessor
+============================
+
+MASP is basically just GASP, with a slight modification.  It has
+inherited all the features and bugs.  There is no documentation,
+unfortunately, becouse it has to be rewritten.  You are left with
+whatever you can find for GASP, but read ``Changes from GASP''.
+
+MASP is being maintained by Johann Gunnar Oskarsson,
+   <myrkraverk@users.sourceforge.net>
+
+See the file INSTALL for installation instructions.
+
+New Features
+============
+
+It's now possible to alternate between the old GASP syntax and the new
+MASP syntax.  In MASP mode, do \gasp to change, and in GASP mode do
+.masp to change back.  Files start in MASP mode.
+
+GASP mode changes the prefix char into '.', overriding the command
+line parameter.
+
+MASP mode changes the prefix back into what was passed on the command
+line.
+
+It is possible to check what mode we're running with \ifmode.
+
+   \ifmode masp	  # True if in masp mode
+   \ifm	   gasp	  # True if in gasp mode (short for \ifmode)
+   \elseifm	  # Else....
+   \endifm	  # End
+
+The underlying assembler can give better error messages if masp is
+passed the --line-numers or -l.
+
+Changes from GASP
+=================
+
+MRI comptatibility mode and Alternate syntax have been depricated.
+All new and changed code will not take them into consideration.
+
+There is now a command line parameter to change the default directive
+prefix, -P and --prefixchar.  Do 'masp --help' for details.
+
+Directives now start with \ instead of . by default so that they no
+longer conflict with the underlying assembler.
+
+The prefix for different bases has changed, instead of something like
+B'0011 for binary, it's now 0b0011, case insensitive.
+
+* 0a is ascii (see below)
+* 0b is binary
+* 0q is octal
+* 0h is hexadecimal
+* 0d is decimal
+
+ASCII conversion only applies to the next char, so 0aAB will become
+65B.
+
+Prefixes such as 0a are left alone when standing on it's own, that is
+not followed by what might be a number, currently whitspace and the
+comment character.
+
+Numbers prefixed with 0x are left alone, the assembler can usually
+handle that.
+
+MASP does not change anything inside comments, so commenting out
+syntax errors actually helps.  Any violation of this rule is
+considered a bug!
+
+MACROS
+------
+
+Use macros with care, this feature is being revised and some bugs may
+creep up.  It's adwised agains using comments with macros, both when
+defining and calling.
+
+The \macro directive has been redefined a little, now commas are
+required between arguments, both when defining and calling.
+
+	 \macro	 foo bar, baz
+	 add	 \bar, \baz
+	 sub	 \baz, \bar
+	 \endm
+
+Defines a macro called foo, that takes two arguments, bar and baz.
+Argument names are prefixed with \ inside macro definitions.
+
+Called like this "foo $0, 1 << 3" it will expand into:
+
+        add      $0, 1 << 3
+        sub      1 << 3, $0
+
+Commas ',' and backslach '\' can be escaped when passed as macro
+arguments with '\'.  String literals (marked by " and ')are passed as is, but since \
+means escape inside them, you'll have to escape it to pass it along.
+
+T.i. to pass "\n" to the assembler, you'll do "\\n", and to pass plain
+comma and backlash to macros, do \, and \\.
+
+
+BUGS
+====
+
+* There is no documentation.
+
+* All the inherited bugs from GASP are still there.
+
+* The portability is probably broken.
+
+* I18n is broken.
+
+
+Todo
+====
+
+* Write documentation
+
+* The package needs to be cleaned up a little bit.
+
+* Fix the bugs ;)
+
+Licence
+=======
+
+This program is distributed under the terms of the GNU General Public
+License, see the file COPYING for details.
+
+Emacs
+=====
+
+Add the following code to your .emacs file to highlight MASP
+directives in asm-mode.
+
+;; To highlight MASP keywords in asm-mode
+(add-hook 'asm-mode-hook (lambda ()
+	  (font-lock-add-keywords
+ 	   'asm-mode
+ 	   '(("^\\s-+\\(\\\\[a-zA-Z0-9]+\\)[ \t\n]"
+ 	      (1 font-lock-type-face))))
+ 	  ))
+
+Libiberty
+=========
+
+The copy of libiberty that comes with this package is probably not
+complete, at least it does not include the testsuite (yet) and the
+texinfo documentation is not built under any circumstances (yet).
+It's not reccomended to use this copy of libiberty with other
+software.  Also some source files have been removed from the
+distribution.

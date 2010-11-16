@@ -1,0 +1,135 @@
+2004-10-17  Jesper Svennevid
+
+	Started tweaking MASP to better suit preprocessing VCL source-files
+
+	* masp.c: Changed default comment character back to ';'
+
+	* masp.c: Changed default prefix character to '.'
+
+	* macro.c: Added hardcoded check for comment-character in get_until_comma()
+
+2003-05-12  Jóhann Gunnar Óskarsson  <myrkraverk@users.sourceforge.net>
+
+	* masp.c: Fixed a nasty segfault when trying to use \ifmode
+
+	* masp.c: Added support for \ifmode checking
+
+	* masp.c: Added an option and support for line number info in output
+
+	* masp.c:
+	Changing back into masp mode now uses the prefix char on the cml.
+
+2003-05-12  Jóhann Gunnar Óskarsson  <myrkraverk@users.sourceforge.net>
+
+	* Makefile.am: put auto.sh in EXTRA_DIST to include it in 'make dist'
+
+	* src/masp.c:
+	Added an option and support for line number info in output
+
+	* configure.ac: Version is no 0.1.14
+
+	* README:
+	Uptaded description of .masp, it now changes back into prefix on cml.
+
+	* src/masp.c:
+	Changing back into masp mode now uses the prefix char on the cml.
+
+2003-05-11  Jóhann Gunnar Óskarsson  <myrkraverk@users.sourceforge.net>
+
+	* src/macro.c: Moved delcaration of ws above function calls in
+	get_until_comma() so the file will compile with gcc 2.95
+
+2003-05-10  Jóhann Gunnar Óskarsson  <myrkraverk@users.sourceforge.net>
+
+	* ChangeLog, autom4te.cache/output.0, autom4te.cache/requests,
+	autom4te.cache/traces.0, configure: Added stuff to ChangeLog
+	updated autotools
+
+	* configure.ac: Bumped the version to 0.1.13
+
+	* src/macro.c:
+	Fixed double colon bug with extra whitespace and check_macro() now
+	correctly switches between syntaxes
+
+	* autom4te.cache/output.0, autom4te.cache/requests, autom4te.cache/traces.0, configure:
+	Updated configure files
+
+	* Makefile.am, Makefile.in, auto.sh, autom4te.cache/requests:
+	Shell scrip to run auto tools
+
+	* configure.ac: Changed version to 0.1.12
+
+	* README: Explanation of \gasp and .masp added.
+
+	* src/masp.c: Added syntax change code to process_file()
+
+	* src/macro.c:
+	Added support in define_macro() to alternate between masp and gasp syntax.
+
+2003-05-10  Jóhann Gunnar Óskarsson  <myrkraverk@users.sourceforge.net>
+
+	* configure.ac: Bumped the version to 0.1.13
+
+	* src/macro.c:
+	Fixed double colon bug with extra whitespace and check_macro() now
+	correctly switches between syntaxes
+
+	* autom4te.cache/output.0, autom4te.cache/requests, autom4te.cache/traces.0, configure:
+	Updated configure files
+
+	* Makefile.am, Makefile.in, auto.sh, autom4te.cache/requests:
+	Shell scrip to run auto tools
+
+	* configure.ac: Changed version to 0.1.12
+
+	* README: Explanation of \gasp and .masp added.
+
+	* src/masp.c: Added syntax change code to process_file()
+
+	* src/macro.c:
+	Added support in define_macro() to alternate between masp and gasp syntax.
+
+
+2003-05-09  Jóhann Gunnar Óskarsson  <myrkraverk@users.sourceforge.net>
+
+	* change_base2() now handles 0a and similar things as itself if it
+	is on it's own.
+
+	* sb_eat_literal() is a new function that eats literals and supports
+	escape sequences.
+
+	* get_until_comma() now handles string literals and escapes , and \
+	with \.
+
+2003-05-07  Jóhann Gunnar Óskarsson  <myrkraverk@users.sourceforge.net>
+
+	* do_formals2() added to handle new macro syntax
+
+	* get_until_comma() added to handle new macro syntax
+
+	* Added a command line parameter to change the default directive
+	marker.  Updated the --help info too.
+
+	* prefix_char is now used to hold the prefix character.
+
+	* process_pseudo_op() in masp.c now uses prefix_char.
+
+	* buffer_and_nest() in macro.c now uses prefix_char.
+
+	* process_assigns() in masp.c now skips over comments.
+
+	* change_base2() in masp.c now skips over comments.
+
+2003-05-04  Jóhann Gunnar Óskarsson  <myrkraverk@users.sourceforge.net>
+
+	* Fixed the build process, masp now includes it's own copy of
+	libiberty and compiles with it.
+
+	* Directives now start with \ instead of . as it was with GASP, so
+	it no longer conflicts with the underlying assembler.
+
+	* Base changed are now prefixed with 0 and the base letter,
+	instead of base letter and ', like 0b010 instead of B'010 for
+	binary.
+
+

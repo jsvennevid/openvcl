@@ -1,0 +1,18 @@
+ * Output-parameters are only applied if the current code-block exits its
+   branch at the 'proper' point.
+
+ * Specifying .init_vf with a register-range will result in a argument-error.
+   This will be solved when the tokenizer has been extended to handle the
+   'range' modifier.
+
+ * The register-allocator is line-based right now, which means that for example
+   a 'move test,test' will allocate a different register for the destination if
+   no more dependency connects them (for example a loop will work around this
+   problem). Some kind of 'sub-line' (argument offset?) included into the range
+   could do the trick.
+
+ * GASP preparsing code does not track the current filename.
+
+ * The CLIP operands are now present but not properly validated.
+
+ * The expression evaluator should output a hexadecimal value instead of a float.

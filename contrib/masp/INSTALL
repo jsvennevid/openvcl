@@ -1,0 +1,31 @@
+			  -*- mode: text -*-
+
+MASP Assembly Preprocessor Installation Instructions
+====================================================
+
+The installation procedure is as follows:
+
+./configure
+make
+make install
+
+This will install 'masp' under /usr/local by default, to install MASP
+in another directory, you can pass the --prefix parameter to the
+configure script.  For example, to install 'masp' under /usr, type:
+
+./configure --prefix=/usr
+
+This will install the 'masp' executable in /usr/bin.
+
+For a complete list of parameters you can pass to configure, type:
+
+./configure --help
+
+Uninstall
+=========
+
+There is a 'make uninstall' (I think, never tryed it), but the only
+thing that gets installed is the masp executable; by default in
+/usr/local/bin.
+
+As of yet, there is no documentation or config files.

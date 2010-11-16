@@ -1,0 +1,118 @@
+0.3.3:
+
+	- Unified error-reporting into a separate class, and changed error
+    display to a more standard appearance.
+  - Added support for using 'cpp' as preprocessor in addition to gasp.
+    If both are used, cpp will run before gasp, to stay compatible.
+  - Added commandline-argument to specify alternative for cpp.
+  - Added input-parsers for gasp and cpp that reflects the original
+    filename and line in errorcodes to assist debugging.
+  - Wrote a RPN expression-evaluator to assist pseudo-instruction LOI.
+  - Added initial CLIP operands, but without proper validation.
+  - Fixed MR32 so that destination-fields are rotated properly.
+  - Fixed templates for RGET and RNEXT so that they generated proper
+    destination fields.
+  - Added a threshold for the number of times a dynamic branch can
+    execute in the register allocator. This value has been initially set
+    to 16, but can be changed by the commandline-parameter '--bthres'.
+    This allows programs with a lot of dynamic branches that intersect
+    to resolve.
+  - Fixed multi-argument operands so that they can leave a trailing
+    comma at the end without issuing any error.
+  - If the final code-block is not terminated by a --exit/--endexit pair,
+    the code-generator will now fail as it should.
+  - Added commandline-argument '--version' to show current version.
+  - Fixed a inconsistency in the argument-extraction.
+  - Added a library of math-routines for use with LOI.
+
+0.3.2:
+
+  - It's now possible to branch between code-blocks with branch-tracking
+    intact. This will allow sharing subroutines between blocks.
+  - Added initial support for output parameters from code-blocks.
+    Currently it will only apply output parameters if the initiating
+    branch for the block reaches the exit-point.
+  - Ending a code-block now properly generates a termination with nop[E].
+  - All currently unsupported preprocessor directives that are VCL
+    specific have been filtered from code-output. (They were previously
+    passed along unprocessed)
+  - Fixed issue in operand-templates where an instruction that wanted a
+    indirect read with an immediate offset would generate invalid code.
+  - Fixed issue with destination-fields where specifying a field on the
+    second (or third) argument (e.g. 'ilw VI01,0(VI00)x') argument with
+    no field specified in the operand would generate an error.
+  - Fixed issue involving indirect register accesses with immediates
+    where GAS would complain when the immediate was omitted.
+  - Added minimal extraction of memory-groups.
+
+0.3.1:
+
+  - Fixed issue with branching to a subroutine from separate locations,
+    which caused the branch to be aborted and ignoring any code that
+    followed the BAL.
+
+0.3:
+
+  - Refactored register-allocator, the new version now supports
+    independent ranges for register-aliases and a more flexible
+    handling of branches.
+  - Reverted BAL to static branching as the register-allocator now
+    can handle this case.
+  - Added return-address tracking for integer-registers when using
+    branches (to allow tracking branches into subroutines).
+  - JR and JALR no longer aborts the current branch, but attempts
+    to read the return-address and jump to it. If it isn't a valid
+    address, the branch is aborted.
+  - Added proper register inputs for both float & integer. You can
+    now connect more than one alias to a register.
+  - Added support for using I,P,Q,R and ACC as register inputs.
+  - Added support for .name directive.
+  - Added removal of dead code.
+  - Added support for --cont tag.
+
+0.2.1:
+
+  - Unified a lot of operand templates to reduce chance of error.
+  - Added simplifications for SUBA, MULA, MADDA and MSUBA.
+  - Fixed register allocation issue, now encloses registers that
+    are reused due to branching (loops).
+  - Fix for JR and JALR, they now abort the current branch when
+    reached, to avoid issues with returning from subroutines.
+  - Flagged BAL as dynamic to support early aborts from JR and JALR.
+  - BAL and JALR lacked the write-modifier on the register that
+    contains the return address, fixed.
+
+0.2:
+
+  - Implemented first iteration of the dynamic branch-tracking
+    register allocator.
+  - Implemented .init_v?_* operands, except the range-version.
+	- Added input parameter handling for entry points.
+	- Added value verification for all float & integer-aliases.
+	- Added value verification for direct register writes.
+  - Added proper write-dependency from pseudo-instruction LOI.
+  - Rewrote input-parser to remove dependencies on strtok() and
+    static char buffers.
+  - Fixed issues with the templates for a lot of operands.
+  - Improved argument parsing in the tokenizer.
+  - Corrected so that immediates do not affect the destination field.
+  - Register numbers are now allowed to be variable in size.
+  - Added support for C++-style comments.
+
+0.1.1:
+
+  - Fixed issues with OPMULA and OPMSUB, dvp-as required that the
+    generated arguments contained valid(xyz) fields.
+  - Had named the '.rem_v*'-declarations incorrectly, fixed
+  - Fixed win32 code to generate proper temporary filenames
+  - Changed error-output to use std::cerr instead of cout, to allow
+    proper use of pipes.
+  - Added sourcecode-comments output support (-c).
+  - Renamed 'isblank()' to 'isBlank()' to avoid issues with defines
+    and gcc.
+  - Made the register extraction code stricter against syntax issues
+		(e.g. 'iaddiu temp1, vi00dontcare, 1' compiled without errors)
+
+0.1:
+
+  - Initial release
