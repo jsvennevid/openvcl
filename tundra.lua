@@ -5,13 +5,11 @@ local common = {
 	}
 }
 
-local glob = require "tundra.syntax.glob"
-
 Build {
 	Units = function()
 		Program {
 			Name = "openvcl",
-			Sources = { glob.Glob { Dir = "src", Extensions = { ".c", ".cpp", ".h" } } }
+			Sources = { Glob { Dir = "src", Extensions = { ".c", ".cpp", ".h" } } }
 		}
 
 		Default "openvcl"
