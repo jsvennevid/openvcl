@@ -44,7 +44,7 @@ bool Tokenizer::parse( const Line& line )
 
 	bool oldVsmMode = vsmMode();
 
-	unsigned int parentheses = 0;
+	int parentheses = 0;
 	char lc = '\0';
 
 	Token token(line);
