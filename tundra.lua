@@ -1,7 +1,7 @@
 local common = {
 	Env = {
 		CCOPTS = { "-ansi", "-pedantic", "-Werror", "-g", Config = "*-gcc-*" },
-		LIBS = { "stdc++", Config = "*-gcc-*" }
+		LIBS = { "stdc++", Config = { "*-clang", "*-gcc-*" } }
 	}
 }
 
